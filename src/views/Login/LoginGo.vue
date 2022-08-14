@@ -45,21 +45,19 @@ export default {
   },
   methods: {
     // 2. 映射 mutations 中的方法
-    // ...mapMutations(['updateTokenInfo']),
     ...mapMutations(['updateTokenInfo']),
     async login() {
       // 只有当表单数据校验通过之后，才会调用此 login 函数
       const { data: res } = await loginAPI(this.form) // 246810
-      console.log(res)
+      // console.log(res)
       // 判断是否登录成功了
 
       if (res.message === 'OK') {
         // alert('登录成功')
         // TODO1：把登录成功的结果，存储到 vuex 中
         // 3. 把登录成功的结果，存储到 vuex 中
-        // this.updateTokenInfo(res.data)
         this.updateTokenInfo(res.data)
-        // alert('登录成功')
+        alert('登录成功')
         // 4. 登录成功后，跳转到主页
         this.$router.push('/')
         // TODO2：登录成功后，跳转到主

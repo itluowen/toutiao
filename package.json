@@ -32,5 +32,13 @@
     "less-loader": "^8.0.0",
     "postcss-pxtorem": "^5.1.1",
     "vue-template-compiler": "^2.6.14"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "printWidth": 115,
+    "proseWrap": "always",
+    "semi" : false,
+    "trailingComma": "none",
+    "htmlWhitespaceSensitivity": "ignore"
   }
 }
