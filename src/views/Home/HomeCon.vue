@@ -21,17 +21,23 @@
     46 px ≈ 1.22666667rem -->
 
     <van-tabs v-model="active" sticky offset-top="1.22666667rem">
-      <van-tab v-for="item in userChannel" :key="item.id" :title="item.name">{{item.name}}</van-tab>
+      <!-- 循环渲染用户的频道 -->
+      <van-tab v-for="item in userChannel" :key="item.id" :title="item.name">
+        <!-- 在每一个用户频道下，渲染出对应的“文章列表组件” -->
+        <!-- 注意：Vue 官方建议在绑定 props 时，把“小驼峰”的属性名，改造成“短横线”的形式使用 -->
+        <art-list :channel-id="item.id"></art-list>
+      </van-tab>
     </van-tabs>
-
     <!-- 频道管理的小图标 -->
-    <van-icon name="plus" size="16" class="plus" />
+    <van-icon name=" plus" size="16" class="plus" />
 
   </div>
 </template>
 
 <script>
 import { getUserChannelAPI } from '@/api/homeAPI.js'
+// 导入 ArtList.vue 组件：
+import ArtList from '@/components/ArtList/ArtList.vue'
 export default {
   name: 'HomeCon',
   data() {
@@ -55,6 +61,9 @@ export default {
         this.userChannel = res.data.channels
       }
     }
+  },
+  components: {
+    ArtList
   }
 }
 </script>

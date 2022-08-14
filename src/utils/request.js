@@ -15,7 +15,7 @@ const instance = axios.create({
 instance.interceptors.request.use(
   (config) => {
     // 展示 loading 效果
-    alert('开始')
+    // alert('开始')
     Toast.loading({
       message: '加载中...', // 文本内容
       duration: 0 // 展示时长(ms)，值为 0 时，toast 不会消失
@@ -32,7 +32,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response) => {
     // 隐藏 loading 效果
-    alert('结束')
+    // alert('结束')
     Toast.clear()
     return response
   },
