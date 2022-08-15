@@ -8,7 +8,7 @@
       </template>
       <!-- 右侧的插槽 -->
       <template #right>
-        <van-icon name="search" color="white" size="18" />
+        <van-icon name="search" color="white" size="40" />
       </template>
     </van-nav-bar>
 

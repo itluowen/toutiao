@@ -4,6 +4,10 @@ import axios from 'axios'
 // 从 vant 中按需导入 Toast 组件
 import { Toast } from 'vant'
 
+// 导入 vuex 的模块
+
+import store from '@/store'
+
 const instance = axios.create({
   baseURL: 'http://www.liulongbin.top:8000' // 请求根路径
 })
@@ -12,8 +16,16 @@ const instance = axios.create({
 
 // 请求拦截器
 // 注意：在我们的项目中，是基于 instance 实例来发起 ajax 请求的，因此一定要为 instance 实例绑定请求拦截器
+// 基于拦截器添加 token 认证
 instance.interceptors.request.use(
   (config) => {
+    // 1. 获取 token 值
+    const tokenStr = store.state.tokenInfo.token
+    // 2. 判断 tokenStr 的值是否为空
+    if (tokenStr) {
+      // 3. 添加身份认证字段
+      config.headers.Authorization = `Bearer ${tokenStr}`
+    }
     // 展示 loading 效果
     // alert('开始')
     Toast.loading({

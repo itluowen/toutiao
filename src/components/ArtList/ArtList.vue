@@ -5,7 +5,7 @@
     <!-- 下拉刷新 -->
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh" :disabled="finished">
       <van-list v-model="loading" :finished="finished" :immediate-check="false" finished-text="没有更多了" @load="onLoad">
-        <ArtItem v-for="item in artlist" :article="item" :key="item.art_id"></ArtItem>
+        <ArtItem v-for="item in artlist" :article="item" :key="item.art_id" @remove-article="removeArticle"></ArtItem>
       </van-list>
     </van-pull-refresh>
 
@@ -73,6 +73,19 @@ export default {
           this.finished = true
           // alert('已经没有了')
         }
+      }
+    },
+
+    // 从文章列表中移除指定 id 的文章
+    removeArticle(id) {
+      // 对原数组进行 filter 方法的过滤
+      this.artlist = this.artlist.filter(item => item.art_id.toString() !== id)
+      // 问题描述：炸楼之后，如果文章列表的数据不足以撑满整个屏幕，会导致上拉加载和下拉刷新不生效的问题
+      // 解决方案：每次炸楼之后，判断剩余数据的文章数量是否小于 10，如果小于 10，则主动请求下一页的数据
+      // 2. 判断剩余数据的文章数量是否小于 10
+      if (this.artlist.length < 10) {
+        // 主动请求下一页的数据
+        this.initArtList()
       }
     },
 

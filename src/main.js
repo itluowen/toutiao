@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-// import Vat from 'vant'
 import store from './store'
 import 'vant/lib/index.less'
 import 'amfe-flexible'
@@ -16,7 +15,7 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import zh from 'dayjs/locale/zh-cn'
 
 // 文章列表图片的懒加载
-
+// 在 ArtItem.vue 组件中，删除 <img> 标签的 src 属性，并应用 v-lazy 指令，指令的值是要展示的图片地址：
 // 按需导入 Lazyload 指令：
 import Vant, { Lazyload } from 'vant'
 
