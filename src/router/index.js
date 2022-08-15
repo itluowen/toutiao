@@ -4,12 +4,29 @@ import LoginGo from '@/views/Login/LoginGo.vue'
 import MainCon from '@/views/Main/MainCon.vue'
 import UserCon from '@/views/User/UserCon.vue'
 import HomeCon from '@/views/Home/HomeCon.vue'
+// 导入搜索组件：
+import SearchCon from '@/views/Search/SearchCon.vue'
+// 导入搜索结果页
+import SearchResult from '@/views/SearchResult/SearchResult.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   // 带有 name 名称的路由规则，叫做“命名路由”
   { path: '/login', component: LoginGo, name: 'LoginGo' },
+  // 搜索结果页
+  {
+    path: '/search/:kw',
+    component: SearchResult,
+    name: 'search-result'
+    // props: true
+  },
+  // 搜索组件的路由规则
+  {
+    path: '/search',
+    component: SearchCon,
+    name: 'SearchCon'
+  },
   {
     // path 为"空字符串"的子路由规则，叫做"默认子路由"
     path: '/',

@@ -7,8 +7,9 @@
         <img src="@/assets/toutiaolog.png" alt="logo" class="logo" />
       </template>
       <!-- 右侧的插槽 -->
+      <!-- 为搜索的小图标绑定点击事件处理函数，通过编程式导航 API 跳转到搜索页： -->
       <template #right>
-        <van-icon name="search" color="white" size="40" />
+        <van-icon name="search" @click="$router.push('/search')" color="white" size="40" />
       </template>
     </van-nav-bar>
 
