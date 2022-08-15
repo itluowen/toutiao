@@ -28,3 +28,17 @@ export const reportArticleAPI = (target, type) => {
     type // 举报的类型
   })
 }
+
+// 请求所有频道的列表数据
+// 在 Home.vue 组件中，按需导入 getAllChannelAPI 方法：
+export const getAllChannelAPI = () => {
+  return request.get('/v1_0/channels')
+}
+
+// 更新用户频道列表数据的 API
+// 注意：形参 channels 是一个数组，格式： [ {id, seq} ]
+export const updateUserChannelAPI = (channels) => {
+  return request.put('/v1_0/user/channels', {
+    channels
+  })
+}

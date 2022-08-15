@@ -39,9 +39,9 @@
       <!-- 第二级反馈面板 -->
       <div v-else>
         <!-- 当点击二级反馈面板中的返回时，将 isFirst 设置为 true，从而展示一级反馈面板： -->
-        <van-cell title="返回" clickable title-class="center-title" @click="isFirst = true" />
+        <van-cell title="返回" clickable class="center-title" @click="isFirst = true" />
         <!-- 循环渲染二级反馈面板的可选项列表： -->
-        <van-cell v-for="item in reports" :key="item.type" clickable title-class="center-title" :title="item.label" @click="reportArticle(item.type)"></van-cell>
+        <van-cell v-for="item in reports" :key="item.type" clickable class="center-title" :title="item.label" @click="reportArticle(item.type)"></van-cell>
       </div>
     </van-action-sheet>
 
@@ -131,6 +131,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.center-title {
+  text-align: center;
+}
 .artliem-container {
   padding: 0.26rem 0.39rem;
   border-bottom: 1px solid rgb(238, 237, 237);
@@ -138,9 +141,7 @@ export default {
     margin-bottom: 10px;
     font-size: 0.37333rem;
   }
-  .center-title {
-    text-align: center;
-  }
+
   .spanmartop {
     margin-top: 10px;
   }
