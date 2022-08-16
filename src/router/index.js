@@ -10,6 +10,8 @@ import SearchCon from '@/views/Search/SearchCon.vue'
 import SearchResult from '@/views/SearchResult/SearchResult.vue'
 // 导入文章详情组件
 import ArticleDetail from '@/views/ArticleDetail/ArticleDetail.vue'
+// 编辑个人资料
+import UserEdit from '@/views/UserEdit/UserEdit.vue'
 
 Vue.use(VueRouter)
 
@@ -36,6 +38,8 @@ const routes = [
     component: SearchCon,
     name: 'SearchCon'
   },
+  // 编辑用户资料的路由规则
+  { path: '/user/edi', component: UserEdit, name: 'user-edit' },
   {
     // path 为"空字符串"的子路由规则，叫做"默认子路由"
     path: '/',
