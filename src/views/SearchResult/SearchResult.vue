@@ -45,6 +45,9 @@ export default {
       if (res.message === 'OK') {
         // 为 searchList 赋值
         // 1. 拼接数据：“旧数据”在前，“新数据”在后
+        // if (res.data.results === '') {
+        //   return console.log('空')
+        // }
         this.searchList = [...this.searchList, ...res.data.results]
         // 2. 将 loading 设置为 false
         this.loading = false
@@ -55,7 +58,7 @@ export default {
         // 4. 让页码值 +1
         this.page += 1
       }
-      console.log(res)
+      // console.log(res)
     },
     onLoad() {
       // 触发了上拉加载更多
