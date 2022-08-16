@@ -20,7 +20,8 @@
         <!-- <van-icon name="cross" size="10" color="#ccc" /> -->
         <!-- 关闭按钮 -->
         <!-- 通过 .stop 事件修饰符，阻止点击事件的冒泡 -->
-        <van-icon name="cross" color="#ccc" size="15" @click.stop="show = true" />
+        <!-- 使用 v-if 动态控制关闭按钮的展示与隐藏： -->
+        <van-icon name="cross" color="#ccc" size="15" @click.stop="show = true" v-if="closable" />
       </van-col>
     </van-row>
 
@@ -64,6 +65,12 @@ export default {
     article: {
       type: Object,
       required: true // 必填项
+    },
+    // 是否展示关闭按钮
+    closable: {
+      type: Boolean,
+      // 默认值为 true，表示展示关闭按钮
+      default: true
     }
   },
   computed: {
