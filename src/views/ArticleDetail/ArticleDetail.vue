@@ -41,12 +41,16 @@
         <van-button icon="good-job-o" type="danger" v-else plain size="small" @click="setLike">点赞</van-button>
       </div>
     </div>
+    <!-- 文章的评论组件 -->
+    <art-cmt :art-id="id"></art-cmt>
   </div>
 </template>
 
 <script>
 // 按需导入 API 接口
 import { getArticleDetailAPI, followUserAPI, unfollowUserAPI, addLikeAPI, delLikeAPI } from '@/api/articleAPI.js'
+// 导入文章的评论组件
+import ArtCmt from '@/components/ArtCmt/ArtCmt.vue'
 export default {
   name: 'article-detail',
   // props 中的 id 是文章的 id（已经调用了大数的 .toString() 方法）
@@ -114,6 +118,9 @@ export default {
         console.log(res)
       }
     }
+  },
+  components: {
+    ArtCmt
   }
 }
 </script>
