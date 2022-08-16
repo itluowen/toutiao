@@ -20,6 +20,7 @@ import ArtItem from '@/components/ArtItem/ArtItem.vue'
 import { getSearchResultAPI } from '@/api/searchAPI.js'
 export default {
   name: 'SearchResult',
+  props: ['kw'],
   data() {
     return {
       // 页码值
@@ -41,7 +42,7 @@ export default {
       // console.log(this)
       // 调用 API 接口
       // if (this.kw === '') return
-      const { data: res } = await getSearchResultAPI(this.$route.params.kw, this.page)
+      const { data: res } = await getSearchResultAPI(this.kw, this.page)
       if (res.message === 'OK') {
         // 为 searchList 赋值
         // 1. 拼接数据：“旧数据”在前，“新数据”在后

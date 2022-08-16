@@ -8,6 +8,8 @@ import HomeCon from '@/views/Home/HomeCon.vue'
 import SearchCon from '@/views/Search/SearchCon.vue'
 // 导入搜索结果页
 import SearchResult from '@/views/SearchResult/SearchResult.vue'
+// 导入文章详情组件
+import ArticleDetail from '@/views/ArticleDetail/ArticleDetail.vue'
 
 Vue.use(VueRouter)
 
@@ -18,8 +20,15 @@ const routes = [
   {
     path: '/search/:kw',
     component: SearchResult,
-    name: 'search-result'
-    // props: true
+    name: 'search-result',
+    props: true
+  },
+  // 文章详情的路由规则
+  {
+    path: '/article/:id',
+    component: ArticleDetail,
+    name: 'article-detail',
+    props: true
   },
   // 搜索组件的路由规则
   {

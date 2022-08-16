@@ -1,5 +1,5 @@
 <template>
-  <div class="artliem-container">
+  <div class="artliem-container" @click="$router.push('/article/' + artId)">
     <!-- 文章的信息 -->
     <van-row class="padding16">
       <van-col span="15">
