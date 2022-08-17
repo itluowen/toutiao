@@ -37,7 +37,7 @@
       <van-cell-group class="action-card">
         <!-- 通过命名路由实现导航跳转 -->
         <van-cell icon="edit" title="编辑资料" is-link @click="$router.push({name: 'user-edit'})" />
-        <van-cell icon="chat-o" title="小思同学" is-link />
+        <van-cell icon="chat-o" title="小思同学" is-link to="/chat" />
         <van-cell icon="warning-o" title="退出登录" is-link @click="logout" />
       </van-cell-group>
     </div>

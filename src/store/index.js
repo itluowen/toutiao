@@ -26,7 +26,20 @@ if (stateStr) {
 // 在 vuex 模块中声明如下的 state 数据节点，定义专门用来存储 token 信息的 tokenInfo 对象：
 export default new Vuex.Store({
   state: initState,
-  getters: {},
+  getters: {
+    // 动态渲染用户头像
+    // 用户头像的计算属性
+    userAvatar(state) {
+      // 默认的头像地址
+      let imgSrc = 'https://img.yzcdn.cn/vant/cat.jpeg'
+
+      // 如果用户信息对象中包含 photo 属性的值，则为 imgSrc 重新赋值
+      if (state.userInfo.photo) {
+        imgSrc = state.userInfo.photo
+      }
+      return imgSrc
+    }
+  },
   mutations: {
     // 在 mutations 节点下，定义名为 updateTokenInfo 的 Mutation 方法，专门用来更新 tokenInfo 的值：
     // 更新 tokenInfo 数据的方法
