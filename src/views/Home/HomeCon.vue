@@ -20,7 +20,9 @@
     1 px = 10/375 rem
     46 px = 460/375 rem
     46 px ≈ 1.22666667rem -->
-    <van-tabs v-model="active" sticky offset-top="1.22666667rem">
+    <!-- 记录每个 tabs 的滚动位置
+    当 Home.vue 组件中的频道选中项发生变化的时候，需要记录每个频道下列表的滚动位置。 -->
+    <van-tabs v-model="active" sticky offset-top="1.22666667rem" :before-change="beforeTabsChange" @change="onTabsChange">
       <!-- 循环渲染用户的频道 -->
       <van-tab v-for="item in userChannel" :key="item.id" :title="item.name">
         <!-- 在每一个用户频道下，渲染出对应的“文章列表组件” -->
@@ -130,6 +132,8 @@ import { getUserChannelAPI, getAllChannelAPI, updateUserChannelAPI } from '@/api
 // 导入 ArtList.vue 组件：
 import ArtList from '@/components/ArtList/ArtList.vue'
 
+const nameToTop = {}
+
 export default {
   name: 'HomeCon',
   data() {
@@ -163,7 +167,6 @@ export default {
         this.userChannel = res.data.channels
       }
     },
-
     // 获取所有频道的列表数据
     async initAllChannel() {
       const { data: res } = await getAllChannelAPI()
@@ -201,7 +204,7 @@ export default {
         })
       // 2. 调用 API 接口
       const { data: res } = await updateUserChannelAPI(channels)
-      console.log(res)
+      // console.log(res)
 
       //  提示用户更新成功
       // 基于 Vant 的 Notify 消息提示组件，可以实现顶部的消息通知
@@ -229,6 +232,30 @@ export default {
         // 2. 关闭 popup 弹出层
         this.show = false
       }
+    },
+    // tabs 发生切换之前，触发此方法
+    beforeTabsChange() {
+      // 把当前"频道名称"对应的"滚动条位置"记录到 nameToTop 对象中
+      // const name = this.channels[this.active].name
+      // nameToTop[name] = window.scrollY
+      // alert('123')
+      // return true 表示允许进行标签页的切换
+      // alert('123')
+      this.$nextTick(() => {
+        const name = this.userChannel[this.active].name
+        nameToTop[name] = window.scrollY
+        console.log(nameToTop)
+      })
+
+      return true
+    },
+    // 当 tabs 切换完毕之后，触发此方法
+    onTabsChange() {
+      // 等 DOM 更新完毕之后，根据记录的"滚动条位置"，调用 window.scrollTo() 方法进行滚动
+      this.$nextTick(() => {
+        const name = this.userChannel[this.active].name
+        window.scrollTo(0, nameToTop[name] || 0)
+      })
     }
   },
   computed: {
@@ -245,10 +272,20 @@ export default {
       // 如果不在，则 return true，表示需要把这一项存储到返回的新数组之中
     }
   },
+  // 导航离开该组件的对应路由时调用
+  // 可以访问组件实例 `this`
+  // 用来记录当前组件在纵向上滚动的距离
+  beforeRouteLeave(to, from, next) {
+    from.meta.top = window.scrollY
+    next()
+  },
   components: {
     ArtList
-  }
+  },
 }
+// 导航离开该组件的对应路由时调用
+// 可以访问组件实例 `this`
+
 </script>
 
 <style lang="less" scoped>

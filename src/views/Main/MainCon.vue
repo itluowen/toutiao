@@ -1,7 +1,9 @@
 <template>
   <div class="main-container">
     <!-- Home 和 User 的路由占位符 -->
-    <router-view></router-view>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
     <!-- 底部的 TabBar -->
     <!-- route 属性：是否开启路由模式 -->
     <van-tabbar route>

@@ -1,7 +1,10 @@
 <template>
   <div id="app">
     <!-- 路由占位符 -->
-    <router-view></router-view>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
+
   </div>
 </template>
 <script>

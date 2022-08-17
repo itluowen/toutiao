@@ -36,6 +36,18 @@ export default {
   created() {
     this.initSearchList()
   },
+  watch: {
+    kw() {
+      // 1. 重置关键数据
+      this.page = 1
+      this.searchList = []
+      this.loading = false
+      this.finished = false
+
+      // 2. 请求数据
+      this.initSearchList()
+    }
+  },
   methods: {
     // 获取搜索的结果
     async initSearchList() {
@@ -69,6 +81,13 @@ export default {
   components: {
     // 注册组件
     ArtItem
+  },
+  // 用来记录当前组件在纵向上滚动的距离：
+  beforeRouteLeave(to, from, next) {
+    from.meta.top = window.scrollY
+    setTimeout(() => {
+      next()
+    }, 0)
   }
 
 }

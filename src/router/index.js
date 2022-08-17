@@ -28,14 +28,16 @@ const routes = [
     path: '/search/:kw',
     component: SearchResult,
     name: 'search-result',
-    props: true
+    props: true,
+    meta: { isRecord: true, top: 0 } // 搜索结果页的路由规则添加路由元信息：
   },
   // 文章详情的路由规则
   {
     path: '/article/:id',
     component: ArticleDetail,
     name: 'article-detail',
-    props: true
+    props: true,
+    meta: { isRecord: true, top: 0 } // 文章详情页的路由规则添加路由元信息：
   },
   // 搜索组件的路由规则
   {
@@ -56,7 +58,11 @@ const routes = [
       {
         path: '',
         component: HomeCon,
-        name: 'HomeCon'
+        name: 'HomeCon',
+        // 记录首页文章列表的滚动位置
+        // 当 Home.vue 组件和 User.vue 进行切换展示时，需要记录 Home.vue 中文章列表的滚动位置
+        // 在 Home.vue 组件中，声明 beforeRouteLeave 这个组件内的守卫，用来记录当前组件在纵向上滚动的距离：
+        meta: { isRecord: true, top: 0 }
       },
       {
         path: 'user',
@@ -83,7 +89,7 @@ router.beforeEach((to, from, next) => {
     // 2.1 访问的是有权限的页面，需要判断用户是否登录
     // 1. 从 store 中获取 token 的值
     //    注意：store.state.tokenInfo 要么是 {} 空对象，要么是包含 {token, refresh_token} 的对象
-    const tokenStr = store.state.tokenInfo.tokenInfo
+    const tokenStr = store.state.tokenInfo.token
     if (tokenStr) {
       // 1.1 token 有值，已登录过（操作：直接放行）
       next()
@@ -101,7 +107,17 @@ router.beforeEach((to, from, next) => {
   }
 })
 
-// 解决 vue-router 内部的报错的问题：
+// 全局后置钩子
+router.afterEach((to, from) => {
+  // 如果当前的路由的元信息中，isRecord 的值为 true
+  if (to.meta.isRecord) {
+    setTimeout(() => {
+      // 则把元信息中的 top 值设为滚动条纵向滚动的位置
+      window.scrollTo(0, to.meta.top)
+    }, 0)
+  }
+})
+
 // 1. 将 VueRouter 本身提供的 $router.push 方法转存到常量中
 const originalPush = VueRouter.prototype.push
 // 2. 自定义 $router.push 方法，在内部调用原生的 originalPush 方法进行路由跳转；并通过 .catch 捕获错误
@@ -112,5 +128,4 @@ VueRouter.prototype.push = function push(location, onResolve, onReject) {
   // 通过 .catch 捕获错误
   return originalPush.call(this, location).catch((err) => err)
 }
-
 export default router

@@ -88,6 +88,11 @@ export default {
     ...mapState(['userInfo'])
   },
   created() {
+    // activated 在组件首次加载时也会调用一次
+    // this.initUserInfo()
+  },
+  activated() {
+    // 只要组件被激活了，就重新初始化用户的信息
     this.initUserInfo()
   }
 }

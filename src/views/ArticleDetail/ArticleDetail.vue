@@ -47,10 +47,14 @@
 </template>
 
 <script>
+/* eslint-disable */
 // 按需导入 API 接口
 import { getArticleDetailAPI, followUserAPI, unfollowUserAPI, addLikeAPI, delLikeAPI } from '@/api/articleAPI.js'
 // 导入文章的评论组件
 import ArtCmt from '@/components/ArtCmt/ArtCmt.vue'
+// 基于 highlight.js 美化详情页的代码片段
+import hljs from 'highlight.js'
+
 export default {
   name: 'article-detail',
   // props 中的 id 是文章的 id（已经调用了大数的 .toString() 方法）
@@ -63,6 +67,15 @@ export default {
   },
   created() {
     this.initArticle()
+  },
+
+  // 1. 当组件的 DOM 更新完毕之后
+  updated() {
+    // 2. 判断是否有文章的内容
+    if (this.article) {
+      // 3. 对文章的内容进行高亮处理
+      hljs.highlightAll()
+    }
   },
   methods: {
     // 初始化文章的数据
@@ -93,7 +106,7 @@ export default {
       // 2.2 手动更改关注的状态
       this.article.is_followed = false
       // }
-      console.log(res)
+      // console.log(res)
     },
     // 文章点赞
     async setLike() {
@@ -103,7 +116,7 @@ export default {
         this.$toast.success('点赞成功！')
         // 手动变更点赞的状态
         this.article.attitude = 1
-        console.log(res)
+        // console.log(res)
       }
     },
     // 取消点赞
@@ -115,12 +128,27 @@ export default {
         // 手动变更点赞的状态
         this.article.attitude = -1
 
-        console.log(res)
+        // console.log(res)
       }
     }
   },
   components: {
     ArtCmt
+  },
+  watch: {
+    id() {
+      // 只要 id 值发生了变化，就清空旧的文章信息
+      this.article = null
+      // 并重新获取文章的详情数据
+      this.initArticle()
+    }
+  },
+  // 用来记录当前组件在纵向上滚动的距离
+  beforeRouteLeave(to, from, next) {
+    from.meta.top = window.scrollY
+    setTimeout(() => {
+      next()
+    }, 0)
   }
 }
 </script>
