@@ -60,21 +60,21 @@ export default {
     // 在 Chat.vue 组件的 created 生命周期函数中，调用 socket.on('connect', fn) 方法，可以监听到 socket 连接成功的事件
     // 建立连接的事件
     socket.on('connect', () => {
-      console.log('connect: websocket 连接成功！')
+      // console.log('connect: websocket 连接成功！')
     })
 
     // ，调用 socket.on('message', fn) 方法，即可监听到服务器发送到客户端的消息：
     socket.on('message', (meg) => {
       // 将服务器发送到客户端的消息，存储到 Chat.vue 组件的 list 数组中
       this.list.push({ name: 'xs', msg: meg })
-      console.log(meg)
-      console.log(this.list)
+      // console.log(meg)
+      // console.log(this.list)
     })
     // 服务器发送到客户端的消息，存储到 Chat.vue 组件的 list 数组中：
 
     // 调用 socket.on('disconnect', fn) 方法，可以监听到 socket 连接关闭的事件
     socket.on('disconnect', () => {
-      console.log('connect: websocket 连接关闭！')
+      // console.log('connect: websocket 连接关闭！')
     })
   },
   // 定义 watch 侦听器，监视 list 数组的变化，从而自动滚动到页面底部：

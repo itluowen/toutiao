@@ -57,10 +57,11 @@ export default {
         // TODO1：把登录成功的结果，存储到 vuex 中
         // 3. 把登录成功的结果，存储到 vuex 中
         this.updateTokenInfo(res.data)
-        alert('登录成功')
+
         // 4. 登录成功后，跳转到主页
-        this.$router.push('/')
-        // TODO2：登录成功后，跳转到主
+        // 2. 要跳转到首页
+        const navPath = this.$route.query.pre || '/'
+        this.$router.replace(navPath)
       }
     }
   }
