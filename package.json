@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --report",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -12,6 +12,7 @@
     "axios": "^0.21.1",
     "core-js": "^3.8.3",
     "dayjs": "^1.11.5",
+    "express-compression": "^1.0.1",
     "highlight.js": "^10.6.0",
     "popmotion": "^9.3.5",
     "socket.io-client": "^4.0.0",
@@ -23,6 +24,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",

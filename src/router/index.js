@@ -1,20 +1,32 @@
 /*eslint-disable*/
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import LoginGo from '@/views/Login/LoginGo.vue'
-import MainCon from '@/views/Main/MainCon.vue'
-import UserCon from '@/views/User/UserCon.vue'
-import HomeCon from '@/views/Home/HomeCon.vue'
+// 导入 Login 组件
+// import LoginGo from '@/views/Login/LoginGo.vue'
+const LoginGo = () => import('@/views/Login/LoginGo.vue')
+// 导入 Main 主页
+// import MainCon from '@/views/Main/MainCon.vue'
+const MainCon = () => import('@/views/Main/MainCon.vue')
+// 导入 Home 和 User 两个子路由组件
+// import UserCon from '@/views/User/UserCon.vue'
+const UserCon = () => import('@/views/User/UserCon.vue')
+// import HomeCon from '@/views/Home/HomeCon.vue'
+const HomeCon = () => import('@/views/Home/HomeCon.vue')
 // 导入搜索组件：
-import SearchCon from '@/views/Search/SearchCon.vue'
+// import SearchCon from '@/views/Search/SearchCon.vue'
+const SearchCon = () => import('@/views/Search/SearchCon.vue')
 // 导入搜索结果页
-import SearchResult from '@/views/SearchResult/SearchResult.vue'
+// import SearchResult from '@/views/SearchResult/SearchResult.vue'
+const SearchResult = () => import('@/views/SearchResult/SearchResult.vue')
 // 导入文章详情组件
-import ArticleDetail from '@/views/ArticleDetail/ArticleDetail.vue'
+// import ArticleDetail from '@/views/ArticleDetail/ArticleDetail.vue'
+const ArticleDetail = () => import('@/views/ArticleDetail/ArticleDetail.vue')
 // 编辑个人资料
-import UserEdit from '@/views/UserEdit/UserEdit.vue'
+// import UserEdit from '@/views/UserEdit/UserEdit.vue'
+const UserEdit = () => import('@/views/UserEdit/UserEdit.vue')
 // 导入小思同学的组件页面
-import ChatCon from '@/views//Chat/ChatCon.vue'
+// import ChatCon from '@/views//Chat/ChatCon.vue'
+const ChatCon = () => import('@/views//Chat/ChatCon.vue')
 // vuex 访问有权限页面时判断是否登录
 // 在导航守卫中，从 store 中获取 token 的值，并在用户访问有权限的页面时，判断 token 的值是否存在：
 import store from '@/store/index.js'
