@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import LoginGo from '@/views/Login/LoginGo.vue'
@@ -17,6 +18,16 @@ import ChatCon from '@/views//Chat/ChatCon.vue'
 // vuex 访问有权限页面时判断是否登录
 // 在导航守卫中，从 store 中获取 token 的值，并在用户访问有权限的页面时，判断 token 的值是否存在：
 import store from '@/store/index.js'
+
+// 1. 将 VueRouter 本身提供的 $router.push 方法转存到常量中
+const originalPush = VueRouter.prototype.push
+// 2. 自定义 $router.push 方法，在内部调用原生的 originalPush 方法进行路由跳转；并通过 .catch 捕获错误
+VueRouter.prototype.push = function push(location, onResolve, onReject) {
+  if (onResolve || onReject)
+    return originalPush.call(this, location, onResolve, onReject)
+  // 通过 .catch 捕获错误
+  return originalPush.call(this, location).catch((err) => err)
+}
 
 Vue.use(VueRouter)
 
@@ -53,7 +64,9 @@ const routes = [
     // path 为"空字符串"的子路由规则，叫做"默认子路由"
     path: '/',
     component: MainCon,
-    name: 'MainCon',
+    // 规则：如果通过 children 加载了默认子路由，则父路由规则不需要加 name 属性
+    // name: 'main',
+    // name: 'MainCon',
     children: [
       {
         path: '',
@@ -111,21 +124,18 @@ router.beforeEach((to, from, next) => {
 router.afterEach((to, from) => {
   // 如果当前的路由的元信息中，isRecord 的值为 true
   if (to.meta.isRecord) {
-    setTimeout(() => {
-      // 则把元信息中的 top 值设为滚动条纵向滚动的位置
+    // 证明 to 这个路由中保存了元信息
+    // 把元信息读取出来，赋值给浏览器的滚动条即可
+    // console.log(to.meta.top)
+    /* setTimeout(function() {
       window.scrollTo(0, to.meta.top)
-    }, 0)
+    }, 0) */
+
+    Vue.nextTick(function () {
+      // console.log(to.meta.top)
+      window.scrollTo(0, to.meta.top)
+    })
   }
 })
 
-// 1. 将 VueRouter 本身提供的 $router.push 方法转存到常量中
-const originalPush = VueRouter.prototype.push
-// 2. 自定义 $router.push 方法，在内部调用原生的 originalPush 方法进行路由跳转；并通过 .catch 捕获错误
-VueRouter.prototype.push = function push(location, onResolve, onReject) {
-  if (onResolve || onReject) {
-    return originalPush.call(this, location, onResolve, onReject)
-  }
-  // 通过 .catch 捕获错误
-  return originalPush.call(this, location).catch((err) => err)
-}
 export default router

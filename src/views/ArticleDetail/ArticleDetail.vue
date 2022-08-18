@@ -59,6 +59,12 @@ export default {
   name: 'article-detail',
   // props 中的 id 是文章的 id（已经调用了大数的 .toString() 方法）
   props: ['id'],
+  watch: {
+    id() {
+      this.article = null
+      this.initArticle()
+    }
+  },
   data() {
     return {
       // 文章的信息对象
@@ -98,7 +104,7 @@ export default {
     },
     // 取关作者
     async setUnfollow() {
-      const { data: res } = await unfollowUserAPI(this.article.aut_id.toString())
+      const res = await unfollowUserAPI(this.article.aut_id.toString())
       // 2. 判断响应的状态码
       // if (res.status === 204) {
       // 2.1 提示用户
@@ -135,20 +141,13 @@ export default {
   components: {
     ArtCmt
   },
-  watch: {
-    id() {
-      // 只要 id 值发生了变化，就清空旧的文章信息
-      this.article = null
-      // 并重新获取文章的详情数据
-      this.initArticle()
-    }
-  },
   // 用来记录当前组件在纵向上滚动的距离
   beforeRouteLeave(to, from, next) {
     from.meta.top = window.scrollY
-    setTimeout(() => {
-      next()
-    }, 0)
+    next()
+    // setTimeout(() => {
+    //   next()
+    // }, 0)
   }
 }
 </script>

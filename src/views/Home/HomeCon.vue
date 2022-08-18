@@ -276,7 +276,12 @@ export default {
   // 可以访问组件实例 `this`
   // 用来记录当前组件在纵向上滚动的距离
   beforeRouteLeave(to, from, next) {
-    from.meta.top = window.scrollY
+    // 导航离开该组件的对应路由时调用
+    // 可以访问组件实例 `this`
+    // console.log('触发了 Home 组件的 beforeRouteLeave')
+    // 在通过路由导航的方式，离开 Home.vue 组件的时候
+    // 把滚动条的位置，记录到当前路由规则的 meta 元信息中
+    this.$route.meta.top = window.scrollY
     next()
   },
   components: {
