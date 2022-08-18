@@ -81,13 +81,6 @@ export default {
   components: {
     // 注册组件
     ArtItem
-  },
-  // 用来记录当前组件在纵向上滚动的距离：
-  beforeRouteLeave(to, from, next) {
-    from.meta.top = window.scrollY
-    setTimeout(() => {
-      next()
-    }, 0)
   }
 
 }

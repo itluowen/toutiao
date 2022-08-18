@@ -9,7 +9,7 @@
       <!-- 右侧的插槽 -->
       <!-- 为搜索的小图标绑定点击事件处理函数，通过编程式导航 API 跳转到搜索页： -->
       <template #right>
-        <van-icon name="search" @click="$router.push('/search')" color="white" size="40" />
+        <van-icon name="search" @click="$router.push('/search')" color="white" size="30" />
       </template>
     </van-nav-bar>
 
@@ -33,7 +33,7 @@
 
     <!-- 频道管理的小图标 -->
     <!-- 在点击频道管理的小图标时，将 show 设置为 true，从而展示出频道管理的弹出层： -->
-    <van-icon name="plus" size="25" class="plus" @click="show = true" />
+    <van-icon name="plus" size="20" class="plus" @click="show = true" />
 
     <!-- 频道管理的弹出层 -->
     <!-- 为 <van-popup> 组件绑定 :close-on-click-overlay="false" 属性，从而防止点击遮罩层时，弹出层自动关闭的效果： -->
@@ -215,6 +215,23 @@ export default {
       }
 
     },
+    // tabs 发生切换之前，触发此方法
+    beforeTabsChange() {
+      // 把当前"频道名称"对应的"滚动条位置"记录到 nameToTop 对象中
+      const name = this.userChannel[this.active].name
+      nameToTop[name] = window.scrollY
+
+      // return true 表示允许进行标签页的切换
+      return true
+    },
+    // 当 tabs 切换完毕之后，触发此方法
+    onTabsChange() {
+      // 等 DOM 更新完毕之后，根据记录的"滚动条位置"，调用 window.scrollTo() 方法进行滚动
+      this.$nextTick(() => {
+        const name = this.userChannel[this.active].name
+        window.scrollTo(0, nameToTop[name] || 0)
+      })
+    },
     onUserChannelClick(channel, index) {
       // 从用户频道列表中，移除指定 id 的频道
       //如果频道的名字是“推荐”，则点击频道的时候不执行删除的操作：
@@ -232,31 +249,8 @@ export default {
         // 2. 关闭 popup 弹出层
         this.show = false
       }
-    },
-    // tabs 发生切换之前，触发此方法
-    beforeTabsChange() {
-      // 把当前"频道名称"对应的"滚动条位置"记录到 nameToTop 对象中
-      // const name = this.channels[this.active].name
-      // nameToTop[name] = window.scrollY
-      // alert('123')
-      // return true 表示允许进行标签页的切换
-      // alert('123')
-      this.$nextTick(() => {
-        const name = this.userChannel[this.active].name
-        nameToTop[name] = window.scrollY
-        console.log(nameToTop)
-      })
-
-      return true
-    },
-    // 当 tabs 切换完毕之后，触发此方法
-    onTabsChange() {
-      // 等 DOM 更新完毕之后，根据记录的"滚动条位置"，调用 window.scrollTo() 方法进行滚动
-      this.$nextTick(() => {
-        const name = this.userChannel[this.active].name
-        window.scrollTo(0, nameToTop[name] || 0)
-      })
     }
+
   },
   computed: {
     // 更多频道的数据
@@ -272,13 +266,14 @@ export default {
       // 如果不在，则 return true，表示需要把这一项存储到返回的新数组之中
     }
   },
+
   // 导航离开该组件的对应路由时调用
   // 可以访问组件实例 `this`
   // 用来记录当前组件在纵向上滚动的距离
+  // 组件内的导航守卫
   beforeRouteLeave(to, from, next) {
     // 导航离开该组件的对应路由时调用
     // 可以访问组件实例 `this`
-    // console.log('触发了 Home 组件的 beforeRouteLeave')
     // 在通过路由导航的方式，离开 Home.vue 组件的时候
     // 把滚动条的位置，记录到当前路由规则的 meta 元信息中
     this.$route.meta.top = window.scrollY

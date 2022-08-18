@@ -17,4 +17,7 @@ export default {
   margin: 0;
   padding: 0;
 }
+h1 {
+  font-size: 12px;
+}
 </style>

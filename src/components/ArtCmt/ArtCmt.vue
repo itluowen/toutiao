@@ -105,7 +105,7 @@ export default {
           this.finished = true
         }
       }
-      console.log(res)
+      // console.log(res)
     },
     //
     onLoad() {
@@ -163,7 +163,7 @@ export default {
         // 提示用户发表评论成功
         this.$toast.success('发表评论成功')
       }
-      console.log(res)
+      // console.log(res)
     },
     // 滚动到评论的列表区域
     scrollToCmtList() {

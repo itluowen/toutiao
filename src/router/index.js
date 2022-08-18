@@ -40,7 +40,7 @@ const routes = [
     component: SearchResult,
     name: 'search-result',
     props: true,
-    meta: { isRecord: true, top: 0 } // 搜索结果页的路由规则添加路由元信息：
+    meta: { isRecord: true, top: 0 }
   },
   // 文章详情的路由规则
   {
@@ -48,7 +48,7 @@ const routes = [
     component: ArticleDetail,
     name: 'article-detail',
     props: true,
-    meta: { isRecord: true, top: 0 } // 文章详情页的路由规则添加路由元信息：
+    meta: { isRecord: true, top: 0 }
   },
   // 搜索组件的路由规则
   {
@@ -120,9 +120,8 @@ router.beforeEach((to, from, next) => {
   }
 })
 
-// 全局后置钩子
+// 挂载全局后置导航守卫
 router.afterEach((to, from) => {
-  // 如果当前的路由的元信息中，isRecord 的值为 true
   if (to.meta.isRecord) {
     // 证明 to 这个路由中保存了元信息
     // 把元信息读取出来，赋值给浏览器的滚动条即可
@@ -132,7 +131,7 @@ router.afterEach((to, from) => {
     }, 0) */
 
     Vue.nextTick(function () {
-      // console.log(to.meta.top)
+      console.log(to.meta.top)
       window.scrollTo(0, to.meta.top)
     })
   }

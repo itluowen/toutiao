@@ -1,12 +1,12 @@
 <template>
-  <div class="Articlede-container">
+  <div class="Articlede-container" v-if="article !== null">
     <!-- 通过路由渲染文章详情组件 -->
     <!-- Header 区域 -->
     <van-nav-bar fixed title="文章详情" left-arrow @click-left="$router.back()" />
 
     <!-- 文章信息区域 -->
     <!-- 组件刚加载时，如果网速较慢，则 data 中的 article 等于 null。为了防止 DOM 闪烁的问题，可以为文章信息区域的 div 应用 v-if 指令： -->
-    <div class="article-container" v-if="article">
+    <div class="article-container">
       <!-- 文章标题 -->
       <h1 class="art-title">{{article.title}}</h1>
 
@@ -61,26 +61,19 @@ export default {
   props: ['id'],
   watch: {
     id() {
+      // 只要 id 值发生了变化，就清空旧的文章信息
       this.article = null
+      // 并重新获取文章的详情数据
       this.initArticle()
-    }
-  },
-  data() {
-    return {
-      // 文章的信息对象
-      article: null
     }
   },
   created() {
     this.initArticle()
   },
-
-  // 1. 当组件的 DOM 更新完毕之后
-  updated() {
-    // 2. 判断是否有文章的内容
-    if (this.article) {
-      // 3. 对文章的内容进行高亮处理
-      hljs.highlightAll()
+  data() {
+    return {
+      // 文章的信息对象
+      article: null
     }
   },
   methods: {
@@ -106,12 +99,12 @@ export default {
     async setUnfollow() {
       const res = await unfollowUserAPI(this.article.aut_id.toString())
       // 2. 判断响应的状态码
-      // if (res.status === 204) {
-      // 2.1 提示用户
-      this.$toast.success('取关成功')
-      // 2.2 手动更改关注的状态
-      this.article.is_followed = false
-      // }
+      if (res.status === 204) {
+        // 2.1 提示用户
+        this.$toast.success('取关成功')
+        // 2.2 手动更改关注的状态
+        this.article.is_followed = false
+      }
       // console.log(res)
     },
     // 文章点赞
@@ -141,13 +134,17 @@ export default {
   components: {
     ArtCmt
   },
-  // 用来记录当前组件在纵向上滚动的距离
   beforeRouteLeave(to, from, next) {
     from.meta.top = window.scrollY
     next()
-    // setTimeout(() => {
-    //   next()
-    // }, 0)
+  },
+  // 1. 当组件的 DOM 更新完毕之后
+  updated() {
+    // 2. 判断是否有文章的内容
+    if (this.article) {
+      // 3. 对文章的内容进行高亮处理
+      hljs.highlightAll()
+    }
   }
 }
 </script>

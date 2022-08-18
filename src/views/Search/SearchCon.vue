@@ -4,7 +4,7 @@
     <div class="search-header">
       <!-- 后退图标 -->
       <!-- 点击搜索页的后退图标，通过编程式导航 API 实现后退操作： -->
-      <van-icon name="arrow-left" color="white" size="45" class="goback" @click="$router.back()" />
+      <van-icon name="arrow-left" color="white" size="25" class="goback" @click="$router.back()" />
       <!-- 搜索组件 -->
       <!-- 搜索框自动获得焦点
       在 Search.vue 组件的 mounted 生命周期函数中，并通过 DOM 操作查找到 input 输入框，使其获得焦点 -->
@@ -134,7 +134,7 @@ export default {
         if (res.message === 'OK') {
           console.log(res.data.options.length)
           if (res.data.options.length === 0) {
-            return alert('查无此人')
+            console.log('查不到')
           }
           // 1. 调用 hlightKeywords 方法，对关键词进行高亮处理
           this.hlightKeywords(res.data.options)
